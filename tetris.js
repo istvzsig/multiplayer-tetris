@@ -111,12 +111,20 @@ function rotateMatrix(matrix, dir) {
   }
 }
 
+function gameOver() {
+  if(matrixCollosion(arena, player)) {
+    arena.forEach(row => row.fill(0));
+    // add game stop function
+  };
+}
+
 function playerReset() {
   const pieces = 'ILJOTSZ';
   // get random piece
   player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
   player.pos.y = 0; // back to top
   player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+  gameOver();
 }
 
 function playerRotate(dir) {
