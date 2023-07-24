@@ -16,6 +16,21 @@ let lastTime = 0;
 let dropCounter = 0;
 let dropInterval = 1000;
 
+function clearArena() {
+  // iterate from bottom to up 
+  outer: for(let y = arena.length - 1; y > 0; --y) {
+    for(let x = 0; x < arena[y].length; ++x) {
+      if(arena[y][x] === 0) {
+        continue outer;
+      }
+    }
+    const row = arena.splice(y, 1)[0].fill(0);
+    arena.unshift(row);
+    ++y;
+  }
+  
+}
+
 function draw() {
   context.fillStyle = "black";
   context.fillRect(0, 0, canvas.clientWidth, canvas.height);
@@ -73,6 +88,7 @@ function playerDrop() {
     player.pos.y--;
     mergeMatrix(arena, player);
     playerReset();
+    clearArena();
     // player.pos.y = 0; // when piece reaches the bottom it goes up to the top of the game arena
   }
   dropCounter = 0;
