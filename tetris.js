@@ -100,6 +100,26 @@ function playerMove(dir) {
   }
 }
 
+// rotate matrix
+function rotateMatrix(matrix, dir) {
+  // transpose array
+  for(let y =0; y < matrix.length; ++y) {
+    for(let x = 0; x < y; ++x) {
+      // array switch
+      [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
+    }
+  }
+  if(dir > 0) {
+    matrix.forEach(row => row.reverse());
+  } else {
+    matrix.reverse();
+  }
+}
+
+function playerRotate(dir) {
+  rotateMatrix(player.matrix, dir);
+}
+
 document.addEventListener('keydown', event => {
   switch(event.key) {
     case 'd':
@@ -110,6 +130,13 @@ document.addEventListener('keydown', event => {
       break;
     case 's':
       playerDrop();
+      break;
+    case 'e':
+      playerRotate(-1);
+      break;
+    case 'q':
+      playerRotate(-1);
+      break;
   }
 })
 
