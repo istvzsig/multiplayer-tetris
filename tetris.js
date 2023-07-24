@@ -35,7 +35,8 @@ const player = {
   pos: {x: 0, y: 0},
 }
 
-function resetDropCounter() {
+function playerDrop() {
+  player.pos.y++;
   dropCounter = 0;
 }
 
@@ -45,8 +46,7 @@ function updateGame(time=0) {
   dropCounter += deltaTime;
 
   if(dropCounter > dropInterval) {
-    player.pos.y++;
-    dropCounter = 0;
+    playerDrop();
   }
   draw();
   requestAnimationFrame(updateGame);
@@ -61,8 +61,7 @@ document.addEventListener('keydown', event => {
       player.pos.x--;
       break;
     case 's':
-      player.pos.y++;
-      resetDropCounter();
+      playerDrop();
   }
 })
 
