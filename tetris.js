@@ -23,6 +23,7 @@ let dropInterval = 1000;
 function draw() {
   context.fillStyle = "black";
   context.fillRect(0, 0, canvas.clientWidth, canvas.height);
+  drawMatrix(arena, {x: 0, y:0});
   drawMatrix(player.matrix, player.pos);
 }
 
@@ -37,7 +38,7 @@ function drawMatrix(matrix, offset) {
   });
 }
 
-function merge(arena, player) {
+function mergeMatrix(arena, player) {
   // copy the arena matrix and merge together with the player
   player.matrix.forEach((row, y) => {
     row.forEach((value, x) => {
@@ -72,6 +73,11 @@ function createMatrix(w, h) {
 
 function playerDrop() {
   player.pos.y++;
+  if(matrixCollosion(arena, player)) {
+    player.pos.y--;
+    mergeMatrix(arena, player);
+    player.pos.y = 0; // when piece reaches the bottom it goes up to the top of the game arena
+  }
   dropCounter = 0;
 }
 
@@ -87,13 +93,20 @@ function updateGame(time=0) {
   requestAnimationFrame(updateGame);
 }
 
+function playerMove(dir) {
+  player.pos.x += dir;
+  if(matrixCollosion(arena, player)) {
+    player.pos.x -= dir;
+  }
+}
+
 document.addEventListener('keydown', event => {
   switch(event.key) {
     case 'd':
-      player.pos.x++;
+      playerMove(1);
       break;
     case 'a':
-      player.pos.x--;
+      playerMove(-1);
       break;
     case 's':
       playerDrop();
