@@ -3,14 +3,8 @@ const context = canvas.getContext("2d");
 
 context.scale(20, 20);
 
-const matrix = [
-  [0, 0, 0],
-  [1, 1, 1],
-  [0, 1, 0],
-];
-
 const player = {
-  matrix: matrix,
+  matrix: createPiece('T'),
   pos: {x: 0, y: 0},
 };
 
@@ -76,7 +70,8 @@ function playerDrop() {
   if(matrixCollosion(arena, player)) {
     player.pos.y--;
     mergeMatrix(arena, player);
-    player.pos.y = 0; // when piece reaches the bottom it goes up to the top of the game arena
+    playerReset();
+    // player.pos.y = 0; // when piece reaches the bottom it goes up to the top of the game arena
   }
   dropCounter = 0;
 }
@@ -116,6 +111,14 @@ function rotateMatrix(matrix, dir) {
   }
 }
 
+function playerReset() {
+  const pieces = 'ILJOTSZ';
+  // get random piece
+  player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+  player.pos.y = 0; // back to top
+  player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
+}
+
 function playerRotate(dir) {
   const pos = player.pos.x;
   let offset = 1;
@@ -131,6 +134,59 @@ function playerRotate(dir) {
       return 
     }
   }
+}
+
+function createPiece(type) {
+  if(type === 'T') {
+    return [
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 1, 0],
+    ];
+  };
+  if(type === 'O') {
+    return [
+      [1, 1],
+      [1, 1],
+    ];
+  };
+  if(type === 'L') {
+    return [
+      [0, 1, 0],
+      [0, 1, 0],
+      [0, 1, 1],
+    ];
+  };
+  if(type === 'J') {
+    return [
+      [0, 1, 0],
+      [0, 1, 0],
+      [1, 1, 0],
+    ];
+  };
+  if(type === 'I') {
+    return [
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+      [0, 1, 0, 0],
+    ];
+  };
+  if(type === 'S') {
+    return [
+      [0, 1, 1],
+      [1, 1, 0],
+      [0, 0, 0],
+    ];
+  };
+  if(type === 'Z') {
+    return [
+      [1, 1, 0],
+      [0, 1, 1],
+      [0, 0, 0],
+    ];
+  };
+  
 }
 
 document.addEventListener('keydown', event => {
