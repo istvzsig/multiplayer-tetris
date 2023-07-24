@@ -3,11 +3,22 @@ const context = canvas.getContext("2d");
 
 context.scale(20, 20);
 
+const player = {
+  matrix: matrix,
+  pos: {x: 0, y: 0},
+};
+
 const matrix = [
   [0, 0, 0],
   [1, 1, 1],
   [0, 1, 0],
 ];
+
+const arena = createMatrix(12, 20);
+
+let lastTime = 0;
+let dropCounter = 0;
+let dropInterval = 1000;
 
 function draw() {
   context.fillStyle = "black";
@@ -26,13 +37,13 @@ function drawMatrix(matrix, offset) {
   });
 }
 
-let lastTime = 0;
-let dropCounter = 0;
-let dropInterval = 1000;
-
-const player = {
-  matrix: matrix,
-  pos: {x: 0, y: 0},
+function createMatrix(w, h) {
+  const matrix = [];
+  // while height is not 0
+  while(h--) {
+    matrix.push(new Array(w).fill(0));
+  }
+  return matrix;
 }
 
 function playerDrop() {
