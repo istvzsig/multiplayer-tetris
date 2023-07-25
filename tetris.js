@@ -1,13 +1,9 @@
+import Player from './modules/Player.mjs';
+
 const canvas = document.getElementById("tetris");
 const context = canvas.getContext("2d");
 
 context.scale(20, 20);
-
-const player = {
-  pos: { x: 0, y: 0 },
-  matrix: null,
-  score: 0,
-};
 
 const colors = [null, "red", "blue", "pink", "orange", "green", "orange"];
 
@@ -16,6 +12,8 @@ const arena = createMatrix(12, 20);
 let lastTime = 0;
 let dropCounter = 0;
 let dropInterval = 1000;
+
+const player = new Player();
 
 function clearArena() {
   let rowCount = 1;
