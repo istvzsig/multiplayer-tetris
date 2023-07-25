@@ -1,4 +1,4 @@
-import { createPiece, matrixCollosion } from "./functions.mjs";
+import { createPiece, matrixCollision } from "./functions.mjs";
 
 export default class Player {
   constructor() {
@@ -11,7 +11,7 @@ export default class Player {
 
   drop(arena) {
     this.pos.y++;
-    if (matrixCollosion(arena, this)) {
+    if (matrixCollision(arena, this)) {
       this.pos.y--;
       mergeMatrix(arena, this);
       this.reset();
@@ -24,7 +24,7 @@ export default class Player {
 
   move(dir) {
     this.pos.x += dir;
-    if (matrixCollosion(arena, this)) {
+    if (matrixCollision(arena, this)) {
       this.pos.x -= dir;
     }
   }
@@ -43,7 +43,7 @@ export default class Player {
     let offset = 1;
     rotateMatrix(this.matrix, dir);
     // check collision
-    while (matrixCollosion(arena, this)) {
+    while (matrixCollision(arena, this)) {
       this.pos.x += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
       if (offset > this.matrix[0].length) {

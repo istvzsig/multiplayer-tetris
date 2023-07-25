@@ -1,4 +1,4 @@
-export function matrixCollosion(arena, player) {
+export function matrixCollision(arena, player) {
  // matrix and offset
  const [m, o] = [player.matrix, player.pos];
  for (let y = 0; y < m.length; ++y) {
