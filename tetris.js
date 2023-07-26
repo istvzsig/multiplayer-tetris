@@ -1,5 +1,5 @@
 import Player from './modules/Player.mjs';
-import { createMatrix, createPiece } from './modules/functions.mjs';
+import { createMatrix, createPiece, matrixCollision } from './modules/functions.mjs';
 
 const canvas = document.getElementById("tetris");
 const context = canvas.getContext("2d");
@@ -65,7 +65,7 @@ function mergeMatrix(arena, player) {
 
 function playerDrop() {
   player.pos.y++;
-  if (matrixCollosion(arena, player)) {
+  if (matrixCollision(arena, player)) {
     player.pos.y--;
     mergeMatrix(arena, player);
     playerReset();
@@ -112,7 +112,7 @@ function rotateMatrix(matrix, dir) {
 }
 
 function gameOver() {
-  if (matrixCollosion(arena, player)) {
+  if (matrixCollision(arena, player)) {
     arena.forEach((row) => row.fill(0)); // clear arena
     player.score = 0; // set player score back to 0
     player.updateScore();
@@ -167,5 +167,5 @@ document.addEventListener("keydown", (event) => {
 });
 
 playerReset();
-updateScore();
+player.updateScore();
 updateGame();
