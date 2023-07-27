@@ -70,7 +70,7 @@ function playerDrop() {
     mergeMatrix(arena, player);
     playerReset();
     clearArena();
-    updateScore();
+    player.updateScore();
     // player.pos.y = 0; // when piece reaches the bottom it goes up to the top of the game arena
   }
   dropCounter = 0;
@@ -86,29 +86,6 @@ function updateGame(time = 0) {
   }
   draw();
   requestAnimationFrame(updateGame);
-}
-
-function playerMove(dir) {
-  player.pos.x += dir;
-  if (matrixCollosion(arena, player)) {
-    player.pos.x -= dir;
-  }
-}
-
-// rotate matrix
-function rotateMatrix(matrix, dir) {
-  // transpose array
-  for (let y = 0; y < matrix.length; ++y) {
-    for (let x = 0; x < y; ++x) {
-      // array switch
-      [matrix[x][y], matrix[y][x]] = [matrix[y][x], matrix[x][y]];
-    }
-  }
-  if (dir > 0) {
-    matrix.forEach((row) => row.reverse());
-  } else {
-    matrix.reverse();
-  }
 }
 
 function gameOver() {
@@ -129,43 +106,26 @@ function playerReset() {
   gameOver();
 }
 
-function playerRotate(dir) {
-  const pos = player.pos.x;
-  let offset = 1;
-  rotateMatrix(player.matrix, dir);
-  // check collision
-  while (matrixCollosion(arena, player)) {
-    player.pos.x += offset;
-    offset = -(offset + (offset > 0 ? 1 : -1));
-    if (offset > player.matrix[0].length) {
-      // rotate back
-      rotateMatrix(player.matrix, -dir);
-      player.pos.x = pos;
-      return;
-    }
-  }
-}
-
 document.addEventListener("keydown", (event) => {
   switch (event.key) {
     case "d":
-      playerMove(1);
+      player.move(1);
       break;
     case "a":
-      playerMove(-1);
+      player.move(-1);
       break;
     case "s":
       playerDrop();
       break;
     case "e":
-      playerRotate(-1);
+      player.rotate(-1);
       break;
     case "q":
-      playerRotate(-1);
+      player.rotate(-1);
       break;
   }
 });
 
-playerReset();
+player.reset(arena);
 player.updateScore();
 updateGame();

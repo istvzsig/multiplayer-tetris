@@ -1,4 +1,4 @@
-import { createPiece, matrixCollision } from "./functions.mjs";
+import { createPiece, matrixCollision, rotateMatrix } from "./functions.mjs";
 
 export default class Player {
   constructor() {
@@ -9,13 +9,13 @@ export default class Player {
     this.dropInterval = 1000;
   }
 
-  drop(arena) {
+  drop() {
     this.pos.y++;
     if (matrixCollision(arena, this)) {
       this.pos.y--;
-      mergeMatrix(arena, this);
+      mergeMatrix(arena.matrix, this);
       this.reset();
-      clearArena();
+      arena.clear();
       this.updateScore();
       // this.pos.y = 0; // when piece reaches the bottom it goes up to the top of the game arena
     }
@@ -29,13 +29,12 @@ export default class Player {
     }
   }
 
-  reset(arena, func) {
+  reset(arena) {
     const pieces = "ILJOTSZ";
     // get random piece
     this.matrix = createPiece(pieces[(pieces.length * Math.random()) | 0]);
     this.pos.y = 0; // back to top
     this.pos.x = ((arena[0].length / 2) | 0) - ((this.matrix[0].length / 2) | 0);
-    func();
   }
 
   rotate(dir) {
