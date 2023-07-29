@@ -1,40 +1,45 @@
-import { createPiece, matrixCollision, rotateMatrix } from "./functions.mjs";
+import { createPiece, rotateMatrix } from "./functions.mjs";
 
 export default class Player {
-  constructor() {
+  constructor(arena) {
     this.pos = { x: 0, y: 0 };
     this.matrix = null;
-    this.score = 0;
     this.dropCounter = 0;
-    this.dropInterval = 1000;
+    this.arena = arena;
+    this.score = this.arena.sweep();
+    this.reset();
   }
 
   drop() {
     this.pos.y++;
-    if (matrixCollision(arena, this)) {
+    if (this.arena.collide(this)) {
       this.pos.y--;
-      mergeMatrix(arena.matrix, this);
+      this.arena.merge(this);
       this.reset();
-      arena.clear();
-      this.updateScore();
-      // this.pos.y = 0; // when piece reaches the bottom it goes up to the top of the game arena
+      this.score += this.arena.sweep();
     }
     this.dropCounter = 0;
+    this.updateScore();
   }
 
   move(dir) {
     this.pos.x += dir;
-    if (matrixCollision(arena, this)) {
+    if (this.arena.collide(this)) {
       this.pos.x -= dir;
     }
   }
 
-  reset(arena) {
+  reset() {
     const pieces = "ILJOTSZ";
-    // get random piece
     this.matrix = createPiece(pieces[(pieces.length * Math.random()) | 0]);
-    this.pos.y = 0; // back to top
-    this.pos.x = ((arena[0].length / 2) | 0) - ((this.matrix[0].length / 2) | 0);
+    this.pos.y = 0;
+    this.pos.x =
+      ((this.arena.matrix[0].length / 2) | 0) -
+      ((this.matrix[0].length / 2) | 0);
+    if (this.arena.collide(this)) {
+      this.arena.clear();
+      // this.score = 0;
+    }
   }
 
   rotate(dir) {
@@ -42,7 +47,7 @@ export default class Player {
     let offset = 1;
     rotateMatrix(this.matrix, dir);
     // check collision
-    while (matrixCollision(arena, this)) {
+    while (this.arena.collide(this)) {
       this.pos.x += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
       if (offset > this.matrix[0].length) {
@@ -54,14 +59,7 @@ export default class Player {
     }
   }
 
-  update(deltaTime) {
-    this.dropCounter += deltaTime;
-    if (this.dropCounter > this.dropInterval) {
-      this.drop();
-    }
-  }
-
   updateScore() {
-    document.getElementById("playerScore").innerText = this.score;
+    document.getElementById("playerScore").innerText = `SCORE: ${this.score}`;
   }
 }
