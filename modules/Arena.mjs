@@ -1,3 +1,15 @@
+/* This module exports the Arena class, representing the game's arena where Tetris blocks are placed.
+   It manages the game matrix, collision detection, merging blocks, and clearing completed rows.
+
+   Usage:
+   import Arena from "./Arena.mjs";
+   const arena = new Arena(width, height);
+   arena.clear();          // Clear the entire matrix
+   arena.collide(player);  // Check if the player collides with the arena's blocks
+   arena.merge(player);    // Merge the player's block into the arena's matrix
+   const score = arena.getScore(); // Get the current score and clear completed rows
+*/
+
 export default class Arena {
   constructor(w, h) {
     const matrix = [];
@@ -34,6 +46,10 @@ export default class Arena {
         }
       });
     });
+  }
+
+  getScore() {
+    this.sweep();
   }
 
   sweep() {
