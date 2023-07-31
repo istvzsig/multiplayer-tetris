@@ -6,7 +6,7 @@ export default class Player {
     this.matrix = null;
     this.dropCounter = 0;
     this.arena = arena;
-    this.score = this.arena.sweep();
+    this.score = this.arena.getScore() || 0;
     this.reset();
   }
 
@@ -38,7 +38,7 @@ export default class Player {
       ((this.matrix[0].length / 2) | 0);
     if (this.arena.collide(this)) {
       this.arena.clear();
-      // this.score = 0;
+      this.score = 0;
     }
   }
 
@@ -60,6 +60,7 @@ export default class Player {
   }
 
   updateScore() {
+    console.log(this.score);
     document.getElementById("playerScore").innerText = `SCORE: ${this.score}`;
   }
 }
