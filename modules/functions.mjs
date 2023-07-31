@@ -50,15 +50,6 @@ export function createPiece(type) {
   }
 }
 
-export function createMatrix(w, h) {
-  const matrix = [];
-  // while height is not 0
-  while (h--) {
-    matrix.push(new Array(w).fill(0));
-  }
-  return matrix;
-}
-
 export function rotateMatrix(matrix, dir) {
   // transpose array
   for (let y = 0; y < matrix.length; ++y) {
