@@ -60,7 +60,6 @@ export default class Player {
   }
 
   updateScore() {
-    console.log(this.score);
     document.getElementById("playerScore").innerText = `SCORE: ${this.score}`;
   }
 }

@@ -12,13 +12,13 @@ import Arena from "./Arena.mjs";
 import Player from "./Player.mjs";
 
 export default class Game {
-  constructor(colors) {
+  constructor(colors, player, arena) {
    this.colors = colors;
     this.canvas = document.getElementById("tetris");
     this.context = this.canvas.getContext("2d");
     this.context.scale(20, 20);
-    this.arena = new Arena(12, 20);
-    this.player = new Player(this.arena);
+    this.arena = arena;
+    this.player = player;
     this.lastTime = 0;
     this.dropInterval = 500;
     this.player.reset(this.arena);
