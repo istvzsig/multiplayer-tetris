@@ -11,19 +11,14 @@ document.addEventListener("keydown", (event) => {
   switch (event.key) {
     case "d":
       player.move(1);
-      break;
     case "a":
       player.move(-1);
-      break;
     case "s":
       player.drop(arena);
-      break;
     case "e":
       player.rotate(arena, -1);
-      break;
     case "q":
       player.rotate(arena, -1);
-      break;
   }
 });
 
