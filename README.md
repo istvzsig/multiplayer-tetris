@@ -4,13 +4,13 @@
 
 ## Description
 
-This is a multiplayer Tetris game designed to be played in the browser. The game was coded using vanilla JavaScript for the front-end and Node.js for the back-end, with WebSocket for real-time communication between players.
+This is a multiplayer Tetris game designed to be played in the browser. The game was coded using vanilla JavaScript for the front-end and GoLang (Go) for the back-end, with WebSocket for real-time communication between players.
 
-**Note**: Before running the game, make sure you have Node.js and npm (Node Package Manager) installed on your system.
+**Note**: Before running the game, make sure you have GoLang (Go) installed on your system.
 
 ## Features
 
-- Real-time multiplayer functionality over WebSocket connection
 - Classic Tetris gameplay
-- Score tracking and leaderboard (later)
 - Responsive design for various screen sizes
+- ~~Real-time multiplayer functionality over WebSocket connection~~
+- ~~Score tracking and leaderboard (later)~~
