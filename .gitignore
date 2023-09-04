@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 tasks.txt
+=======
+.vscode
+*.txt
+./client
+>>>>>>> 1c268e354b808eb6b499ccfdb617b6b0e02c4f4a
