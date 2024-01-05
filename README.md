@@ -1,4 +1,4 @@
-# Multiplayer Tetris Game (VIP)
+# Multiplayer Tetris Game (Work in Progress)
 
 ![Tetris Logo](https://static.wikia.nocookie.net/tetrisconcept/images/5/51/T_Tetromino0.png/revision/latest?cb=20201205152323)
 
