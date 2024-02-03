@@ -4,7 +4,7 @@ import Player from "./modules/Player.mjs";
 
 const colors = [null, "red", "blue", "pink", "orange", "green", "orange"];
 const arena = new Arena(12, 20);
-const player  = new Player(arena);
+const player = new Player(arena);
 const game = new Game(colors, player, arena);
 
 document.addEventListener("keydown", (event) => {
