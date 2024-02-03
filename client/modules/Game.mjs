@@ -13,8 +13,12 @@ import Player from "./Player.mjs";
 
 export default class Game {
   constructor(colors, player, arena) {
-   this.colors = colors;
-    this.canvas = document.getElementById("tetris");
+    this.colors = colors;
+    this.canvas = document.createElement("canvas");
+    this.canvas.width = 300;
+    this.canvas.height = 400;
+
+    this.canvas.id = "tetris";
     this.context = this.canvas.getContext("2d");
     this.context.scale(20, 20);
     this.arena = arena;
@@ -23,6 +27,9 @@ export default class Game {
     this.dropInterval = 500;
     this.player.reset(this.arena);
     this.player.updateScore();
+
+    document.body.firstChild.before(this.canvas);
+    this.canvas.before(player.scoreCounter);
   }
 
   drawMatrix(matrix, offset) {
@@ -37,6 +44,7 @@ export default class Game {
   }
 
   start(time = 0) {
+    // console.log("game started");
     const deltaTime = time - this.lastTime;
 
     this.player.dropCounter += deltaTime;
@@ -51,7 +59,6 @@ export default class Game {
 
     this.drawMatrix(this.arena.matrix, { x: 0, y: 0 });
     this.drawMatrix(this.player.matrix, this.player.pos);
-
     requestAnimationFrame(this.start.bind(this));
   }
 }
