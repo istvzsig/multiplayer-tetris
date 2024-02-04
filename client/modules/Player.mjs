@@ -3,10 +3,11 @@ import { createPiece, rotateMatrix } from "./functions.mjs";
 export default class Player {
   constructor(arena) {
     this.pos = { x: 0, y: 0 };
-    this.matrix = null;
+    this.matrix = [];
     this.dropCounter = 0;
     this.arena = arena;
     this.score = this.arena.getScore() || 0;
+    this.scoreCounter = document.createElement("div");
     this.reset();
   }
 
@@ -30,14 +31,12 @@ export default class Player {
   }
 
   reset() {
-    const pieces = "ILJOTSZ";
-    this.matrix = createPiece(pieces[(pieces.length * Math.random()) | 0]);
+    const piecesStr = "ILJOTSZ";
+    this.matrix = createPiece(piecesStr[(piecesStr.length * Math.random()) | 0]);
     this.pos.y = 0;
-    this.pos.x =
-      ((this.arena.matrix[0].length / 2) | 0) -
-      ((this.matrix[0].length / 2) | 0);
+    this.pos.x = ((this.arena.matrix[0].length / 2) | 0) - ((this.matrix[0].length / 2) | 0);
     if (this.arena.collide(this)) {
-      this.arena.clear();
+      this.arena.clearRows();
       this.score = 0;
     }
   }
@@ -60,6 +59,6 @@ export default class Player {
   }
 
   updateScore() {
-    document.getElementById("playerScore").innerText = `SCORE: ${this.score}`;
+    this.scoreCounter.innerText = `SCORE: ${this.score}`;
   }
 }

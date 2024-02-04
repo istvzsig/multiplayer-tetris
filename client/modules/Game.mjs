@@ -1,21 +1,8 @@
-/* This module exports the Game class, which represents the main game logic for Tetris.
-   It handles drawing the game on the canvas, updating the game state, and managing player actions.
-
-   Usage:
-   import Game from "./Game.mjs";
-   const colors = [...]; // Define your colors array
-   const game = new Game(colors);
-   game.start();
-*/
-
-import Arena from "./Arena.mjs";
-import Player from "./Player.mjs";
-
 export default class Game {
   constructor(colors, player, arena) {
     this.colors = colors;
     this.canvas = document.createElement("canvas");
-    this.canvas.width = 300;
+    this.canvas.width = 240;
     this.canvas.height = 400;
 
     this.canvas.id = "tetris";
@@ -35,8 +22,8 @@ export default class Game {
   drawMatrix(matrix, offset) {
     matrix.forEach((row, y) => {
       row.forEach((value, x) => {
+        this.context.fillStyle = "blue";
         if (value !== 0) {
-          this.context.fillStyle = this.colors[value];
           this.context.fillRect(x + offset.x, y + offset.y, 1, 1);
         }
       });
@@ -44,7 +31,6 @@ export default class Game {
   }
 
   start(time = 0) {
-    // console.log("game started");
     const deltaTime = time - this.lastTime;
 
     this.player.dropCounter += deltaTime;
